@@ -1,12 +1,18 @@
+//Express.js Framework configuation
 const express = require("express");
 const app = express();
+
+//App Setting is here (e.g. port)
 require("dotenv").config();
-const PORT = process.env.PORT || 3000;
 
-app.get("/", (req, res) => {
-    res.send("Hello!");
-});
+//Database Connection!
+require("./config/db");
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+//All routes configuation
+app.use("/", require("./routes/Index"));
+
+
+//Create a server
+app.listen(process.env.PORT, () => {
+    console.log(`Server is running on port ${process.env.PORT}`);
 });
