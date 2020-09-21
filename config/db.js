@@ -19,5 +19,4 @@ const initilizeMongoServer = async () => {
 
 }
 
-
 module.exports = initilizeMongoServer();
