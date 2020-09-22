@@ -15,9 +15,10 @@ app.use(express.static(__dirname + "/public"));
 app.use(express.urlencoded({extended : false}));
 
 //All routes configuation (Version: 1.0.0)
-app.use("/v1", require("./routes/Index"));
+app.use("/api/v1", require("./routes/Index"));
 
 //Create a server
-app.listen(process.env.PORT, () => {
-    console.log(`Server is running on port ${process.env.PORT}`);
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
 });
