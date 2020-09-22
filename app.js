@@ -16,6 +16,14 @@ app.use(express.static(__dirname + "/public"));
 
 app.use(bodyparser.json());
 
+app.use((req,res,next)=>{
+    res.setHeader("Access-Control-Allow-Origin" , "*");
+    res.setHeader("Access-Control-Allow-Methods" , "GET, POST, PUT, DELETE");
+    res.setHeader("Access-Control-Allow-Headers" , "Content-Type, Authorization");
+    next();
+});
+
+
 //All routes configuation (Version: 1.0.0)
 app.use("/api/v1", require("./routes/Index"));
 
