@@ -60,7 +60,7 @@ router.post("/create", authorization, async (req, res) => {
         });
 
         await newMap.save();
-        res.status(200).json({ message: "با موفقیت ثبت شد!", status: 200 });
+        res.status(201).json({ message: "با موفقیت ثبت شد!", status: 201 });
     }
     catch (error) {
         console.log(error.message);

@@ -8,9 +8,9 @@ const checkMapOwnership = async (req, res, next) => {
     let user = await User.findById(userId);
 
     if (!userId) {
-        res.status(500).json({
+        res.status(401).json({
             message: "خطای احراز هویت",
-            status: 500
+            status: 401
         });
     }
 
@@ -21,7 +21,7 @@ const checkMapOwnership = async (req, res, next) => {
 
         //admin can update or delete any map!
         if (!user.isAdmin && map.userid.toString() !== userId) {
-            res.status(500).json({ message: "خطا در احراز هویت", status: 500 });
+            res.status(401).json({ message: "خطا در احراز هویت", status: 401 });
         }
 
         next();

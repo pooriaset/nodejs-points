@@ -1,5 +1,3 @@
-const { mongo } = require("mongoose");
-
 const mongoose = require("mongoose");
 
 const userSchema = mongoose.Schema({
@@ -7,7 +5,8 @@ const userSchema = mongoose.Schema({
     username: { type: String, required: [true, "Username is required!"] , unique : true },
     password: { type: String, required: [true, "Password is required!"] },
     email: { type: String, required: [true, "Email is required!"] },
-    isAdmin: { type: Boolean }
+    isAdmin: { type: Boolean },
+    createAt : {type : Date , default : new Date()}
 });
 
 module.exports = mongoose.model("user", userSchema);

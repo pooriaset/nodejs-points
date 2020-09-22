@@ -7,7 +7,9 @@ const authorization = (req, res, next) => {
         jwt.verify(token, "string", { algorithm: "HS256" }, (error, decoded) => {
             
             if (error || !decoded.user) {
-                res.status(500).json({ message: "خطا در احراز هویت", status: 500 });
+                const error = new Error("خطا در احراز هویت");
+                error.statusCode = 401;
+                throw error;
             }
 
             req.user = decoded.user;
@@ -17,7 +19,9 @@ const authorization = (req, res, next) => {
         })
     }
     else {
-        res.status(500).json({ message: "خطا در احراز هویت", status: 500 });
+        const error = new Error("خطا در احراز هویت");
+        error.statusCode = 401;
+        throw error;
     }
 };
 
