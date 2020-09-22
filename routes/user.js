@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require("../models/user");
 const authorization = require("../validations/authorization");
 
+
 router.get("/", authorization, async (req, res) => {
     try {
         const user = await User.findById(req.user.id);

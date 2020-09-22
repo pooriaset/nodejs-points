@@ -8,6 +8,7 @@ const MapController = require("../controllers/MapController");
 //Validation config
 const authorization = require("../validations/authorization");
 const checkMapOwnership = require("../validations/checkMapOwnership");
+const { body } = require("express-validator/check");
 
 //GET (get single map by id)
 router.get("/:id", MapController.getById);
@@ -16,7 +17,16 @@ router.get("/:id", MapController.getById);
 router.get("/page/:page", MapController.getByPage);
 
 //POST (create new map)
-router.post("/create", authorization, MapController.createMap);
+router.post("/create",
+    authorization,
+    [
+        body('latitude').isNumeric(),
+        body('longitude').isNumeric(),
+        body('address').trim().isString().isLength({ min: 5 }),
+        body('phone').trim().notEmpty(),
+        body('phone').trim().isLength({ max: 11 })
+    ],
+    MapController.createMap);
 
 //PUT (update a map data)
 router.put("/update:id", authorization, checkMapOwnership, MapController.updateOne);

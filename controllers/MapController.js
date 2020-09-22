@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Map = require("../models/map");
 const ObjectId = mongoose.Types.ObjectId;
+const {validationResult} = require("express-validator/check");
 
 class MapController {
     async getById(req, res) {
@@ -39,6 +40,15 @@ class MapController {
     }
 
     async createMap(req, res) {
+        const errors = validationResult(req);
+        if(!errors.isEmpty())
+        {
+            return res.status(422).json({
+                message : "اعتبارسنجی با شکست مواجه شد. اطلاعات وارد شده صحیح نیست!",
+                errors : errors.array()
+            });
+        }
+
         try {
             let newMap = new Map({
                 latitude: req.body.latitude,
