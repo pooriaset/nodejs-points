@@ -1,14 +1,24 @@
 const express = require("express");
 const router = express.Router();
-const user = require("../models/user");
+const User = require("../models/user");
+const authorization = require("../validations/authorization");
 
-router.get("/", async (req, res) => {
+router.get("/", authorization, async (req, res) => {
     try {
-        let countofUsers = await user.find({}).countDocuments(); 
-        res.json({ count: countofUsers});
-
-    } catch (err) {
+        const user = await User.findById(req.user.id);
+        res.status(200).json({
+            data: user,
+            tokenExpireTime: req.tokenExpireTime,
+            message: "اطلاعات دریافت شد",
+            status: 200
+        });
+    }
+    catch (err) {
         console.log(err);
+        res.status(500).json({
+            message: "خطای ناشناخته رخ داده است!",
+            status: 500
+        });
     }
 
 });
