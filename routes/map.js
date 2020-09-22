@@ -89,7 +89,7 @@ router.put("/update:id", authorization, checkMapOwnership, async (req, res) => {
     }
 });
 
-
+//Delete (delete a map)
 router.delete("/delete/:id", authorization, checkMapOwnership, async (req, res) => {
     try {
         await Map.deleteOne({ _id: req.params.id});

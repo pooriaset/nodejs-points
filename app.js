@@ -3,7 +3,7 @@ const express = require("express");
 const app = express();
 
 //App Setting is here (e.g. port)
-require("dotenv").config();
+require("dotenv").config({path : "./config/dev.env"})
 
 //Database connection
 require("./config/db");
