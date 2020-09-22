@@ -14,8 +14,8 @@ app.use(express.static(__dirname + "/public"));
 
 app.use(express.urlencoded({extended : false}));
 
-//All routes configuation
-app.use("/", require("./routes/Index"));
+//All routes configuation (Version: 1.0.0)
+app.use("/v1", require("./routes/Index"));
 
 //Create a server
 app.listen(process.env.PORT, () => {
