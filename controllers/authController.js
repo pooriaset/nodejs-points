@@ -33,7 +33,8 @@ class AuthController {
             }
             const paylaod = {
                 user: {
-                    id: user.id
+                    id: user.id,
+                    isAdmin : user.isAdmin
                 }
             };
 
@@ -85,7 +86,8 @@ class AuthController {
 
             const payload = {
                 user: {
-                    id: user.id
+                    id: user.id,
+                    isAdmin: user.isAdmin
                 }
             };
 

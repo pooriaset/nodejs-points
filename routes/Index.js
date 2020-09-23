@@ -8,8 +8,8 @@ const swaggerDoc = require('../swagger.json');
 
 //All routes configuration
 router.use("/auth", require("./auth"));
-router.use("/user", require("./user"));
 router.use("/map", require("./map"));
+router.use("/user", require("./user"));
 
 //intilize swagger document route
 router.use("/docs", swagger.serve, swagger.setup(swaggerDoc));

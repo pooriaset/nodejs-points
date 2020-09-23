@@ -1,22 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const User = require("../models/user");
 const authorization = require("../validations/authorization");
+const IsAdmin = require("../validations/isAdmin");
+const userController = require("../controllers/userController");
 
-
-router.get("/", authorization, async (req, res , next) => {
-    try {
-        const user = await User.findById(req.user.id);
-        res.status(200).json({
-            data: user,
-            tokenExpireTime: req.tokenExpireTime
-        });
-    }
-    catch (err) {
-        next(error);
-    }
-
-});
-
+router.get("/:id", authorization, IsAdmin, userController.getOneUserById);
+router.get("/", authorization, IsAdmin, userController.getAll);
+router.delete("/:id", authorization, IsAdmin, userController.deleteOne);
 
 module.exports = router;

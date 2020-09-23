@@ -1,10 +1,12 @@
 const mongoose = require("mongoose");
 const Map = require("../models/map");
 const ObjectId = mongoose.Types.ObjectId;
-const {validationResult} = require("express-validator/check");
+const { validationResult } = require("express-validator/check");
 
 class MapController {
-    async getById(req, res , next) {
+    
+    //get map by id
+    async getById(req, res, next) {
         try {
             let map = await Map.findById(req.params.id);
             res.status(200).json(map);
@@ -14,8 +16,9 @@ class MapController {
         }
     }
 
-    async getByPage(req, res , next) {
-        const pagesize = 2;
+    //get map by page
+    async getByPage(req, res, next) {
+        const pagesize = 5;
         const page = req.params.page;
         try {
             let maps = await Map.find().skip(pagesize * (page - 1)).limit(pagesize);
@@ -31,13 +34,13 @@ class MapController {
         }
     }
 
-    async createMap(req, res ,next) {
+    //create a map
+    async createMap(req, res, next) {
         const errors = validationResult(req);
-        if(!errors.isEmpty())
-        {
+        if (!errors.isEmpty()) {
             return res.status(422).json({
-                message : "اعتبارسنجی با شکست مواجه شد. اطلاعات وارد شده صحیح نیست!",
-                errors : errors.array()
+                message: "اعتبارسنجی با شکست مواجه شد. اطلاعات وارد شده صحیح نیست!",
+                errors: errors.array()
             });
         }
 
@@ -51,7 +54,7 @@ class MapController {
             });
 
             await newMap.save();
-            res.status(201).json({ message: "با موفقیت ثبت شد!"});
+            res.status(201).json({ message: "با موفقیت ثبت شد!" });
         }
         catch (error) {
             next(error);
@@ -59,6 +62,7 @@ class MapController {
 
     }
 
+    //update a map
     async updateOne(req, res) {
         try {
 
@@ -73,6 +77,7 @@ class MapController {
         }
     }
 
+    //delete a map
     async deleteOne(req, res) {
         try {
             await Map.deleteOne({ _id: req.params.id });
