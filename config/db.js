@@ -1,5 +1,3 @@
-const { mongo } = require("mongoose");
-
 const mongoose = require("mongoose");
 
 const initilizeMongoServer = async () => {

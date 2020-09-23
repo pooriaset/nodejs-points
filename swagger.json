@@ -11,6 +11,10 @@
         {
             "name": "Maps",
             "description": "API for maps in the application"
+        },
+        {
+            "name": "Authentication",
+            "description": "Api for login and register"
         }
     ],
     "schemes": [
@@ -242,6 +246,98 @@
                     }
                 }
             }
+        },
+        "/auth/register": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "user login in application",
+                "parameters": [
+                    {
+                        "name": "login",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/login"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success Login",
+                        "schema": {
+                            "$ref": "#/definitions/auth"
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid authentication",
+                        "schema": {
+                            "$ref": "#/definitions/RespnseMessage"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid fields errors",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorInFields"
+                        }
+                    },
+                    "500": {
+                        "description": "Server internal error",
+                        "schema": {
+                            "$ref": "#/definitions/RespnseMessage"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "user register in application",
+                "parameters": [
+                    {
+                        "name": "register",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/register"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success register",
+                        "schema": {
+                            "$ref": "#/definitions/auth"
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid authentication",
+                        "schema": {
+                            "$ref": "#/definitions/RespnseMessage"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid fields errors",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorInFields"
+                        }
+                    },
+                    "500": {
+                        "description": "Server internal error",
+                        "schema": {
+                            "$ref": "#/definitions/RespnseMessage"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -296,6 +392,13 @@
                 }
             }
         },
+        "auth": {
+            "properties": {
+                "authorization": {
+                    "type": "string"
+                }
+            }
+        },
         "ErrorInFields": {
             "properties": {
                 "message": {
@@ -321,6 +424,42 @@
                     "type": "string"
                 },
                 "location": {
+                    "type": "string"
+                }
+            }
+        },
+        "login": {
+            "required": [
+                "username",
+                "password"
+            ],
+            "properties": {
+                "username": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "register": {
+            "required": [
+                "username",
+                "password",
+                "fullname",
+                "email"
+            ],
+            "properties": {
+                "username": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "fullname": {
+                    "type": "string"
+                },
+                "email": {
                     "type": "string"
                 }
             }
