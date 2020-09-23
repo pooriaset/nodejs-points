@@ -7,8 +7,7 @@ class AuthController {
     async login(req, res, next) {
 
         const errors = validationResult(req);
-        if (!errors.isEmpty())
-        {
+        if (!errors.isEmpty()) {
             return res.status(422).json({
                 message: "اعتبارسنجی با شکست مواجه شد. اطلاعات وارد شده صحیح نیست!",
                 errors: errors.array()
@@ -34,7 +33,7 @@ class AuthController {
             const paylaod = {
                 user: {
                     id: user.id,
-                    isAdmin : user.isAdmin
+                    isAdmin: user.isAdmin
                 }
             };
 
@@ -43,7 +42,8 @@ class AuthController {
                     throw err;
 
                 res.status(200).json({
-                    authorization: token
+                    authorization: token,
+                    expiresIn: new Date(Date.now() + 24 * 3600 * 1000)
                 });
             });
 
@@ -95,7 +95,11 @@ class AuthController {
                 if (error) {
                     throw error;
                 }
-                res.status(200).json({ authorization: token });
+                res.status(200).json(
+                    {
+                        authorization: token,
+                        expiresIn: new Date(Date.now() + 24 * 3600 * 1000)
+                    });
             })
 
         }

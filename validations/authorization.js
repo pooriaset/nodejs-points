@@ -11,10 +11,7 @@ const authorization = (req, res, next) => {
                 error.statusCode = 401;
                 throw error;
             }
-
             req.user = decoded.user;
-            req.tokenExpireTime = decoded.exp;
-        
             next();
         })
     }

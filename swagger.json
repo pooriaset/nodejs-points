@@ -15,6 +15,10 @@
         {
             "name": "Authentication",
             "description": "Api for login and register"
+        },
+        {
+            "name": "Users",
+            "description": "Api for get and delete users in application by ADMIN role"
         }
     ],
     "schemes": [
@@ -338,6 +342,125 @@
                     }
                 }
             }
+        },
+        "/user": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "get all users by just ADMIN role",
+                "parameters": [
+                    {
+                        "name": "Authentication",
+                        "in": "header",
+                        "required": true,
+                        "description": "You should add JWT token in header!"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success get all users",
+                        "schema": {
+                            "items": {
+                                "$ref": "#/definitions/user"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid authentication",
+                        "schema": {
+                            "$ref": "#/definitions/RespnseMessage"
+                        }
+                    },
+                    "500": {
+                        "description": "Server internal error",
+                        "schema": {
+                            "$ref": "#/definitions/RespnseMessage"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/{id}": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "get one user by id by just ADMIN role",
+                "parameters": [
+                    {
+                        "name": "Authentication",
+                        "in": "header",
+                        "required": true,
+                        "description": "You should add JWT token in header!"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success get user by id",
+                        "schema": {
+                            "$ref": "#/definitions/user"
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid authentication",
+                        "schema": {
+                            "$ref": "#/definitions/RespnseMessage"
+                        }
+                    },
+                    "500": {
+                        "description": "Server internal error",
+                        "schema": {
+                            "$ref": "#/definitions/RespnseMessage"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "delete one user by id by just ADMIN role",
+                "parameters": [
+                    {
+                        "name": "Authentication",
+                        "in": "header",
+                        "required": true,
+                        "description": "You should add JWT token in header!"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success delete user by id",
+                        "schema": {
+                            "$ref": "#/definitions/RespnseMessage"
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid authentication",
+                        "schema": {
+                            "$ref": "#/definitions/RespnseMessage"
+                        }
+                    },
+                    "500": {
+                        "description": "Server internal error",
+                        "schema": {
+                            "$ref": "#/definitions/RespnseMessage"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -395,6 +518,9 @@
         "auth": {
             "properties": {
                 "authorization": {
+                    "type": "string"
+                },
+                "expiresIn": {
                     "type": "string"
                 }
             }
@@ -460,6 +586,28 @@
                     "type": "string"
                 },
                 "email": {
+                    "type": "string"
+                }
+            }
+        },
+        "user": {
+            "properties": {
+                "username": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "fullname": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "isAdmin": {
+                    "type": "boolean"
+                },
+                "createAt": {
                     "type": "string"
                 }
             }
