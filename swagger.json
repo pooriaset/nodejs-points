@@ -18,7 +18,7 @@
         },
         {
             "name": "Users",
-            "description": "Api for get and delete users in application by ADMIN role"
+            "description": "Api for get and delete users in application by `ADMIN` role"
         }
     ],
     "schemes": [
