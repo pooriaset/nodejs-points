@@ -4,22 +4,16 @@ const User = require("../models/user");
 const authorization = require("../validations/authorization");
 
 
-router.get("/", authorization, async (req, res) => {
+router.get("/", authorization, async (req, res , next) => {
     try {
         const user = await User.findById(req.user.id);
         res.status(200).json({
             data: user,
-            tokenExpireTime: req.tokenExpireTime,
-            message: "اطلاعات دریافت شد",
-            status: 200
+            tokenExpireTime: req.tokenExpireTime
         });
     }
     catch (err) {
-        console.log(err);
-        res.status(500).json({
-            message: "خطای ناشناخته رخ داده است!",
-            status: 500
-        });
+        next(error);
     }
 
 });

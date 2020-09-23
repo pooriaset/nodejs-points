@@ -2,7 +2,7 @@
     "swagger": "2.0",
     "info": {
         "version": "1.0.0",
-        "title": "My Test ofogh project",
+        "title": "My ofogh test project",
         "description": "Maps and users documention"
     },
     "host": "localhost:3000",

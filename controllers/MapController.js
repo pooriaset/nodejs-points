@@ -4,17 +4,17 @@ const ObjectId = mongoose.Types.ObjectId;
 const {validationResult} = require("express-validator/check");
 
 class MapController {
-    async getById(req, res) {
+    async getById(req, res , next) {
         try {
             let map = await Map.findById(req.params.id);
             res.status(200).json(map);
         }
         catch (error) {
-            res.status(500).json({ message: "خطای ناشناخته رخ داده است!"});
+            next(error);
         }
     }
 
-    async getByPage(req, res) {
+    async getByPage(req, res , next) {
         const pagesize = 2;
         const page = req.params.page;
         try {
@@ -27,13 +27,11 @@ class MapController {
             res.status(200).json(maps);
         }
         catch (error) {
-            res.status(500).json({
-                message: "خطای ناشناخته رخ داده است!"
-            });
+            next(error);
         }
     }
 
-    async createMap(req, res) {
+    async createMap(req, res ,next) {
         const errors = validationResult(req);
         if(!errors.isEmpty())
         {
@@ -56,8 +54,7 @@ class MapController {
             res.status(201).json({ message: "با موفقیت ثبت شد!"});
         }
         catch (error) {
-            console.log(error.message);
-            res.status(500).json({ message: "خطای ناشناخته رخ داده است!" });
+            next(error);
         }
 
     }
@@ -72,10 +69,7 @@ class MapController {
             });
         }
         catch (error) {
-            console.log(error.message);
-            res.status(500).json({
-                message: "خطای ناشناخته رخ داده است!"
-            });
+            next(error);
         }
     }
 
@@ -87,10 +81,7 @@ class MapController {
             });
 
         } catch (error) {
-            console.log(error.message);
-            res.status(500).json({
-                message: "خطای ناشناخته رخ داده است!"
-            });
+            next(error);
         }
     }
 }

@@ -27,11 +27,7 @@ const checkMapOwnership = async (req, res, next) => {
         next();
     }
     catch (error) {
-        console.log(error.message);
-        res.status(500).json({
-            message: "خطای ناشناخته رخ داده است",
-            status: 500
-        });
+        next(error);
     }
 }
 

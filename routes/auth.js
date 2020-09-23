@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 
-router.post("/login", async (req, res) => {
+router.post("/login", async (req, res, next) => {
 
     const { username, password } = req.body;
 
@@ -43,16 +43,12 @@ router.post("/login", async (req, res) => {
 
     }
     catch (error) {
-        console.log(error.message);
-        res.status(500).status(500).json({
-            message: "خطای ناشناخته رخ داده است!",
-            status: 500
-        });
+        next(error);
     }
 
 });
 
-router.post("/register", async (req, res) => {
+router.post("/register", async (req, res, next) => {
 
     const { username, password, email, fullname } = req.body;
 
@@ -83,18 +79,15 @@ router.post("/register", async (req, res) => {
         };
 
         jwt.sign(payload, "string", { algorithm: "HS256", expiresIn: "2 days" }, (error, token) => {
-            if (error)
+            if (error) {
                 throw error;
+            }
             res.status(200).json({ authorization: token });
         })
 
     }
     catch (error) {
-        console.log(error.message);
-        res.status(500).status(500).json({
-            message: "خطای ناشناخته رخ داده است!",
-            status: 500
-        });
+        next(error);
     }
 });
 
