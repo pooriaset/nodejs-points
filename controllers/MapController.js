@@ -10,7 +10,7 @@ class MapController {
             res.status(200).json(map);
         }
         catch (error) {
-            res.status(500).json({ message: "خطای ناشناخته رخ داده است!", status: 500 });
+            res.status(500).json({ message: "خطای ناشناخته رخ داده است!"});
         }
     }
 
@@ -20,21 +20,15 @@ class MapController {
         try {
             let maps = await Map.find().skip(pagesize * (page - 1)).limit(pagesize);
             if (!maps.length) {
-                res.status(500).json({
-                    message: "موردی یافت نشد",
-                    status: 500
+                res.status(404).json({
+                    message: "موردی یافت نشد"
                 });
             }
-            res.status(200).json({
-                data: maps,
-                status: 200,
-                message: "با موفقیت به روز شد"
-            });
+            res.status(200).json(maps);
         }
         catch (error) {
-            res.json({
-                message: "خطای ناشناخته رخ داده است!",
-                status: 500
+            res.status(500).json({
+                message: "خطای ناشناخته رخ داده است!"
             });
         }
     }
@@ -59,11 +53,11 @@ class MapController {
             });
 
             await newMap.save();
-            res.status(201).json({ message: "با موفقیت ثبت شد!", status: 201 });
+            res.status(201).json({ message: "با موفقیت ثبت شد!"});
         }
         catch (error) {
             console.log(error.message);
-            res.status(500).json({ message: "خطای ناشناخته رخ داده است!", status: 500 });
+            res.status(500).json({ message: "خطای ناشناخته رخ داده است!" });
         }
 
     }
@@ -74,15 +68,13 @@ class MapController {
             await Map.updateOne({ _id: req.params.id }, { $set: req.body });
 
             res.status(200).json({
-                message: "با موفقیت ویرایش شد!",
-                status: 200
+                message: "با موفقیت ویرایش شد!"
             });
         }
         catch (error) {
             console.log(error.message);
             res.status(500).json({
-                message: "خطای ناشناخته رخ داده است!",
-                status: 500
+                message: "خطای ناشناخته رخ داده است!"
             });
         }
     }
@@ -91,15 +83,13 @@ class MapController {
         try {
             await Map.deleteOne({ _id: req.params.id });
             res.status(200).json({
-                message: "با موفقیت حذف شد!",
-                status: 200
+                message: "با موفقیت حذف شد!"
             });
 
         } catch (error) {
             console.log(error.message);
             res.status(500).json({
-                message: "خطای ناشناخته رخ داده است!",
-                status: 500
+                message: "خطای ناشناخته رخ داده است!"
             });
         }
     }

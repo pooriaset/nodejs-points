@@ -32,6 +32,12 @@
                 "description": "Create new map in system",
                 "parameters": [
                     {
+                        "name": "Authentication",
+                        "required": true,
+                        "in": "header",
+                        "description": "You should add JWT token in header!"
+                    },
+                    {
                         "name": "Map",
                         "in": "body",
                         "description": "map that we want to create",
@@ -47,13 +53,20 @@
                     "201": {
                         "description": "New map is created",
                         "schema": {
-                            "items": {
-                                "$ref": "#/definitions/CreateMap"
-                            }
+                            "$ref": "#/definitions/RespnseMessage"
                         }
                     },
-                    "400": {
-                        "description": "Invalid status value"
+                    "401": {
+                        "description": "Invalid authentication",
+                        "schema": {
+                            "$ref": "#/definitions/RespnseMessage"
+                        }
+                    },
+                    "500": {
+                        "description": "Server internal error",
+                        "schema": {
+                            "$ref": "#/definitions/RespnseMessage"
+                        }
                     }
                 }
             }
@@ -78,17 +91,23 @@
                         "description": "OK",
                         "schema": {
                             "items": {
-                                "$ref": "#/definitions/GetMaps"
+                                "$ref": "#/definitions/GetMap"
                             }
+                        }
+                    },
+                    "500": {
+                        "description": "Server internal error",
+                        "schema": {
+                            "$ref": "#/definitions/RespnseMessage"
                         }
                     }
                 }
             }
         },
-        "/map/page/{mapId}": {
+        "/map/page/{id}": {
             "parameters": [
                 {
-                    "name": "mapId",
+                    "name": "id",
                     "in": "path",
                     "required": true,
                     "description": "ID of map that we want to find",
@@ -104,7 +123,13 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/GetMaps"
+                            "$ref": "#/definitions/GetMap"
+                        }
+                    },
+                    "500": {
+                        "description": "Server internal error",
+                        "schema": {
+                            "$ref": "#/definitions/RespnseMessage"
                         }
                     }
                 }
@@ -143,7 +168,19 @@
                     "200": {
                         "description": "map is updated",
                         "schema": {
-                            "$ref": "#/definitions/CreateMap"
+                            "$ref": "#/definitions/RespnseMessage"
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid authentication",
+                        "schema": {
+                            "$ref": "#/definitions/RespnseMessage"
+                        }
+                    },
+                    "500": {
+                        "description": "Server internal error",
+                        "schema": {
+                            "$ref": "#/definitions/RespnseMessage"
                         }
                     }
                 }
@@ -173,7 +210,7 @@
                     }
                 }
             ],
-            "put": {
+            "delete": {
                 "summary": "Deletes user with give ID",
                 "tags": [
                     "Maps"
@@ -182,7 +219,19 @@
                     "200": {
                         "description": "map is deleted",
                         "schema": {
-                            "$ref": "#/definitions/CreateMap"
+                            "$ref": "#/definitions/RespnseMessage"
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid authentication",
+                        "schema": {
+                            "$ref": "#/definitions/RespnseMessage"
+                        }
+                    },
+                    "500": {
+                        "description": "Server internal error",
+                        "schema": {
+                            "$ref": "#/definitions/RespnseMessage"
                         }
                     }
                 }
@@ -212,7 +261,7 @@
                 }
             }
         },
-        "GetMaps": {
+        "GetMap": {
             "properties": {
                 "latitude": {
                     "type": "number"
@@ -230,6 +279,13 @@
                     "type": "string"
                 },
                 "date": {
+                    "type": "string"
+                }
+            }
+        },
+        "RespnseMessage": {
+            "properties": {
+                "message": {
                     "type": "string"
                 }
             }
