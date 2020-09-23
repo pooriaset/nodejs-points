@@ -37,7 +37,7 @@ class AuthController {
                 }
             };
 
-            jwt.sign(paylaod, "string", { algorithm: "HS256", expiresIn: "2 days" }, (err, token) => {
+            jwt.sign(paylaod, process.env.APP_SECRETKEY, { algorithm: "HS256", expiresIn: "2 days" }, (err, token) => {
                 if (err)
                     throw err;
 
@@ -89,7 +89,7 @@ class AuthController {
                 }
             };
 
-            jwt.sign(payload, "string", { algorithm: "HS256", expiresIn: "2 days" }, (error, token) => {
+            jwt.sign(payload, process.env.APP_SECRETKEY, { algorithm: "HS256", expiresIn: "2 days" }, (error, token) => {
                 if (error) {
                     throw error;
                 }
@@ -101,7 +101,6 @@ class AuthController {
             next(error);
         }
     }
-
 }
 
 module.exports = new AuthController;
