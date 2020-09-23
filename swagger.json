@@ -62,6 +62,12 @@
                             "$ref": "#/definitions/RespnseMessage"
                         }
                     },
+                    "422": {
+                        "description": "Invalid fields errors",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorInFields"
+                        }
+                    },
                     "500": {
                         "description": "Server internal error",
                         "schema": {
@@ -286,6 +292,35 @@
         "RespnseMessage": {
             "properties": {
                 "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "ErrorInFields": {
+            "properties": {
+                "message": {
+                    "type": "string"
+                },
+                "erorrs": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/422Model"
+                    }
+                }
+            }
+        },
+        "422Model": {
+            "properties": {
+                "value": {
+                    "type": "boolean"
+                },
+                "msg": {
+                    "type": "string"
+                },
+                "param": {
+                    "type": "string"
+                },
+                "location": {
                     "type": "string"
                 }
             }

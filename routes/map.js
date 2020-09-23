@@ -20,11 +20,11 @@ router.get("/page/:page", MapController.getByPage);
 router.post("/create",
     authorization,
     [
-        body('latitude').isNumeric(),
-        body('longitude').isNumeric(),
-        body('address').trim().isString().isLength({ min: 5 }),
-        body('phone').trim().notEmpty(),
-        body('phone').trim().isLength({ max: 11 })
+        body('latitude' , "لتیتود باید از جنس عدد باشد").isNumeric(),
+        body('longitude', "لانگیتود باید از جنس عدد باشد").isNumeric(),
+        body('address', "آدرس باید حداقل ۵ کاراکتر باشد").trim().isString().isLength({ min: 5 }),
+        body('phone', "تلفن نباید خالی باشد").trim().notEmpty(),
+        body('phone', "تلفن باید حداکثر ۱۱ کاراکتر باشد").trim().isLength({ max: 11 })
     ],
     MapController.createMap);
 
