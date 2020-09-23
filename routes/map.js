@@ -29,7 +29,7 @@ router.post("/create",
     MapController.createMap);
 
 //PUT (update a map data)
-router.put("/update:id", authorization, checkMapOwnership, MapController.updateOne);
+router.put("/update/:id", authorization, checkMapOwnership, MapController.updateOne);
 
 //Delete (delete a map)
 router.delete("/delete/:id", authorization, checkMapOwnership, MapController.deleteOne);

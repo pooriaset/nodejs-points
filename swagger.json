@@ -1,0 +1,238 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "My Test ofogh project",
+        "description": "Maps and users documention"
+    },
+    "host": "localhost:3000",
+    "basePath": "/api/v1",
+    "tags": [
+        {
+            "name": "Maps",
+            "description": "API for maps in the application"
+        }
+    ],
+    "schemes": [
+        "http"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/map/create": {
+            "post": {
+                "tags": [
+                    "Maps"
+                ],
+                "summary": "create a new map",
+                "description": "Create new map in system",
+                "parameters": [
+                    {
+                        "name": "Map",
+                        "in": "body",
+                        "description": "map that we want to create",
+                        "schema": {
+                            "$ref": "#/definitions/CreateMap"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "New map is created",
+                        "schema": {
+                            "items": {
+                                "$ref": "#/definitions/CreateMap"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/map/page/{pagenumber}": {
+            "parameters": [
+                {
+                    "name": "pagenumber",
+                    "in": "path",
+                    "required": true,
+                    "description": "page number that we want to find",
+                    "type": "integer"
+                }
+            ],
+            "get": {
+                "tags": [
+                    "Maps"
+                ],
+                "summary": "Get all maps with pagination",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "items": {
+                                "$ref": "#/definitions/GetMaps"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/map/page/{mapId}": {
+            "parameters": [
+                {
+                    "name": "mapId",
+                    "in": "path",
+                    "required": true,
+                    "description": "ID of map that we want to find",
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "tags": [
+                    "Maps"
+                ],
+                "summary": "Get one map by ID",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/GetMaps"
+                        }
+                    }
+                }
+            }
+        },
+        "/map/update/{id}": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "description": "ID of map that we want to update",
+                    "type": "string"
+                },
+                {
+                    "name": "Authentication",
+                    "in": "header",
+                    "required": true,
+                    "description": "You should add JWT token in header!"
+                },
+                {
+                    "name": "map",
+                    "in": "body",
+                    "description": "Map with new values of properties",
+                    "schema": {
+                        "$ref": "#/definitions/CreateMap"
+                    }
+                }
+            ],
+            "put": {
+                "summary": "Update user with give ID",
+                "tags": [
+                    "Maps"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "map is updated",
+                        "schema": {
+                            "$ref": "#/definitions/CreateMap"
+                        }
+                    }
+                }
+            }
+        },
+        "/map/delete/{id}": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "description": "ID of map that we want to delete",
+                    "type": "string"
+                },
+                {
+                    "name": "Authentication",
+                    "required": true,
+                    "in": "header",
+                    "description": "You should add JWT token in header!"
+                },
+                {
+                    "name": "map",
+                    "in": "body",
+                    "description": "Map with new values of properties",
+                    "schema": {
+                        "$ref": "#/definitions/CreateMap"
+                    }
+                }
+            ],
+            "put": {
+                "summary": "Deletes user with give ID",
+                "tags": [
+                    "Maps"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "map is deleted",
+                        "schema": {
+                            "$ref": "#/definitions/CreateMap"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "CreateMap": {
+            "required": [
+                "latitude",
+                "longitude",
+                "address",
+                "phone"
+            ],
+            "properties": {
+                "latitude": {
+                    "type": "number"
+                },
+                "longitude": {
+                    "type": "number"
+                },
+                "address": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                }
+            }
+        },
+        "GetMaps": {
+            "properties": {
+                "latitude": {
+                    "type": "number"
+                },
+                "longitude": {
+                    "type": "number"
+                },
+                "address": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "userid": {
+                    "type": "string"
+                },
+                "date": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
