@@ -30,23 +30,22 @@ class AuthController {
                 error.statusCode = 401;
                 next(error);
             }
-            const paylaod = {
+            const payload = {
                 user: {
                     id: user.id,
                     isAdmin: user.isAdmin
                 }
             };
 
-            jwt.sign(paylaod, process.env.APP_SECRETKEY, { algorithm: "HS256", expiresIn: "2 days" }, (err, token) => {
-                if (err)
-                    throw err;
+            let accessToken = createAccessToken(payload);
+            let refreshToken = createRefreshToken(payload);
 
-                res.status(200).json({
-                    authorization: token,
-                    expiresIn: new Date(Date.now() + 24 * 3600 * 1000)
-                });
+            res.status(200).json({
+                accessToken: accessToken,
+                accessTokenExpiresIn: new Date(Date.now() + 60000),
+                refreshToken: refreshToken,
+                refreshTokenExpiresIn: new Date(Date.now() + 172800000),
             });
-
         }
         catch (err) {
             next(err);
@@ -91,22 +90,64 @@ class AuthController {
                 }
             };
 
-            jwt.sign(payload, process.env.APP_SECRETKEY, { algorithm: "HS256", expiresIn: "2 days" }, (error, token) => {
-                if (error) {
-                    throw error;
-                }
-                res.status(200).json(
-                    {
-                        authorization: token,
-                        expiresIn: new Date(Date.now() + 24 * 3600 * 1000)
-                    });
-            })
+            let accessToken = createAccessToken(payload);
+            let refreshToken = createRefreshToken(payload);
+
+            res.status(200).json({
+                accessToken: accessToken,
+                accessTokenExpiresIn: new Date(Date.now() + 60000),
+                refreshToken: refreshToken,
+                refreshTokenExpiresIn: new Date(Date.now() + 172800000),
+            });
 
         }
         catch (error) {
             next(error);
         }
     }
+
+    async refresh(req, res, next) {
+        if (typeof req.headers.authorization !== "undefined") {
+            let token = req.headers.authorization.split(' ')[1];
+            jwt.verify(token, process.env.REFRESH_TOKEN_SECRET,
+                { algorithm: "HS256" }, (error, decoded) => {
+                    if (error) {
+                        const error = new Error("خطا در احراز هویت");
+                        error.statusCode = 401;
+                        next(error);
+                    }
+
+                    let playload = {
+                        user: decoded.user
+                    }
+
+                    let accessToken = createAccessToken(playload);
+
+                    res.status(200).json({
+                        accessToken: accessToken,
+                        accessTokenExpiresIn: new Date(Date.now() + 60000)
+                    });
+                });
+        }
+        else {
+            const error = new Error("خطا در احراز هویت");
+            error.statusCode = 401;
+            next(error);
+        }
+    }
+}
+
+const createAccessToken = (paylaod) => {
+    let accessToken = jwt.sign(paylaod, process.env.ACCESS_TOKEN_SECRET,
+        { algorithm: "HS256", expiresIn: "60000ms" });
+    return accessToken;
+}
+
+const createRefreshToken = (payload) => {
+    let refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, {
+        algorithm: "HS256", expiresIn: "172800000ms"
+    });
+    return refreshToken;
 }
 
 module.exports = new AuthController;

@@ -40,7 +40,7 @@
                 "description": "Create new map in system",
                 "parameters": [
                     {
-                        "name": "Authentication",
+                        "name": "authorization",
                         "required": true,
                         "in": "header",
                         "description": "You should add JWT token in header!"
@@ -159,7 +159,7 @@
                     "type": "string"
                 },
                 {
-                    "name": "Authentication",
+                    "name": "authorization",
                     "in": "header",
                     "required": true,
                     "description": "You should add JWT token in header!"
@@ -210,7 +210,7 @@
                     "type": "string"
                 },
                 {
-                    "name": "Authentication",
+                    "name": "authorization",
                     "required": true,
                     "in": "header",
                     "description": "You should add JWT token in header!"
@@ -343,6 +343,45 @@
                 }
             }
         },
+        "/auth/refresh-token": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "refresh user access token",
+                "parameters": [
+                    {
+                        "name": "authorization",
+                        "required": true,
+                        "in": "header",
+                        "description" : "send jwt refresh token in header to get access token!"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success create access token",
+                        "schema": {
+                            "$ref": "#/definitions/refresh"
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid authentication",
+                        "schema": {
+                            "$ref": "#/definitions/RespnseMessage"
+                        }
+                    },
+                    "500": {
+                        "description": "Server internal error",
+                        "schema": {
+                            "$ref": "#/definitions/RespnseMessage"
+                        }
+                    }
+                }
+            }
+        },
         "/user": {
             "get": {
                 "tags": [
@@ -351,7 +390,7 @@
                 "summary": "get all users by just ADMIN role",
                 "parameters": [
                     {
-                        "name": "Authentication",
+                        "name": "authorization",
                         "in": "header",
                         "required": true,
                         "description": "You should add JWT token in header!"
@@ -392,7 +431,7 @@
                 "summary": "get one user by id by just ADMIN role",
                 "parameters": [
                     {
-                        "name": "Authentication",
+                        "name": "authorization",
                         "in": "header",
                         "required": true,
                         "description": "You should add JWT token in header!"
@@ -431,7 +470,7 @@
                 "summary": "delete one user by id by just ADMIN role",
                 "parameters": [
                     {
-                        "name": "Authentication",
+                        "name": "authorization",
                         "in": "header",
                         "required": true,
                         "description": "You should add JWT token in header!"
@@ -517,10 +556,26 @@
         },
         "auth": {
             "properties": {
-                "authorization": {
+                "accessToken": {
                     "type": "string"
                 },
-                "expiresIn": {
+                "accessTokenExpiresIn": {
+                    "type": "string"
+                },
+                "refreshToken": {
+                    "type": "string"
+                },
+                "refreshTokenExpiresIn": {
+                    "type": "string"
+                }
+            }
+        },
+        "refresh": {
+            "properties": {
+                "accessToken": {
+                    "type": "string"
+                },
+                "accessTokenExpiresIn": {
                     "type": "string"
                 }
             }
