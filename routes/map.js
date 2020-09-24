@@ -25,5 +25,4 @@ router.put("/update/:id", authorization, mapValidator.update(), checkMapOwnershi
 //Delete (delete a map)
 router.delete("/delete/:id", authorization, checkMapOwnership, MapController.deleteOne);
 
-
 module.exports = router;
