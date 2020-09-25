@@ -42,7 +42,7 @@ class AuthController {
 
             res.status(200).json({
                 accessToken: accessToken,
-                accessTokenExpiresIn: new Date(Date.now() + 60000),
+                accessTokenExpiresIn: new Date(Date.now() + 1000 * 3600),
                 refreshToken: refreshToken,
                 refreshTokenExpiresIn: new Date(Date.now() + 172800000),
             });
@@ -95,7 +95,7 @@ class AuthController {
 
             res.status(200).json({
                 accessToken: accessToken,
-                accessTokenExpiresIn: new Date(Date.now() + 60000),
+                accessTokenExpiresIn: new Date(Date.now() + 1000 * 3600),
                 refreshToken: refreshToken,
                 refreshTokenExpiresIn: new Date(Date.now() + 172800000),
             });
@@ -126,7 +126,7 @@ class AuthController {
 
                     res.status(200).json({
                         accessToken: accessToken,
-                        accessTokenExpiresIn: new Date(Date.now() + 60000)
+                        accessTokenExpiresIn: new Date(Date.now() + 60000 * 60)
                     });
                 });
         }
@@ -140,7 +140,7 @@ class AuthController {
 
 const createAccessToken = (paylaod) => {
     let accessToken = jwt.sign(paylaod, process.env.ACCESS_TOKEN_SECRET,
-        { algorithm: "HS256", expiresIn: "60000ms" });
+        { algorithm: "HS256", expiresIn: "1h" });
     return accessToken;
 }
 
