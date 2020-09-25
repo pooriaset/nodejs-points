@@ -8,7 +8,7 @@ class MapController {
     //get all maps
     async getAll(req, res, next) {
         try {
-            let map = await Map.find();
+            let map = await Map.find().sort({ date: -1 });
             res.status(200).json(map);
         }
         catch (error) {
@@ -32,7 +32,7 @@ class MapController {
         const pagesize = 5;
         const page = req.params.page;
         try {
-            let maps = await Map.find().skip(pagesize * (page - 1)).limit(pagesize);
+            let maps = await Map.find().sort({date : -1}).skip(pagesize * (page - 1)).limit(pagesize);
             if (!maps.length) {
                 res.status(404).json({
                     message: "موردی یافت نشد"
