@@ -85,6 +85,30 @@
                 }
             }
         },
+        "/map": {
+            "get": {
+                "tags": [
+                    "Maps"
+                ],
+                "summary": "Get all maps",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "items": {
+                                "$ref": "#/definitions/GetMap"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server internal error",
+                        "schema": {
+                            "$ref": "#/definitions/RespnseMessage"
+                        }
+                    }
+                }
+            }
+        },
         "/map/page/{pagenumber}": {
             "parameters": [
                 {
@@ -354,7 +378,7 @@
                         "name": "authorization",
                         "required": true,
                         "in": "header",
-                        "description" : "send jwt refresh token in header to get access token!"
+                        "description": "send jwt refresh token in header to get access token!"
                     }
                 ],
                 "produces": [

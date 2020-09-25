@@ -5,6 +5,17 @@ const { validationResult } = require("express-validator/check");
 
 class MapController {
     
+    //get all maps
+    async getAll(req, res, next) {
+        try {
+            let map = await Map.find();
+            res.status(200).json(map);
+        }
+        catch (error) {
+            next(error);
+        }
+    }
+
     //get map by id
     async getById(req, res, next) {
         try {

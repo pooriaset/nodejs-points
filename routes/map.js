@@ -10,6 +10,9 @@ const authorization = require("../validations/authorization");
 const checkMapOwnership = require("../validations/checkMapOwnership");
 const mapValidator = require("../validations/mapValidator");
 
+//GET (get all maps)
+router.get("/", MapController.getAll);
+
 //GET (get single map by id)
 router.get("/:id", MapController.getById);
 
