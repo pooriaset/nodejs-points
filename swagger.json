@@ -142,7 +142,7 @@
                 }
             }
         },
-        "/map/page/{id}": {
+        "/map/{id}": {
             "parameters": [
                 {
                     "name": "id",
