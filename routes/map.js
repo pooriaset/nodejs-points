@@ -13,6 +13,9 @@ const mapValidator = require("../validations/mapValidator");
 //GET (get all maps)
 router.get("/", MapController.getAll);
 
+//GET (get maps by query)
+router.get("/query", MapController.getByQuery)
+
 //GET (get single map by id)
 router.get("/:id", MapController.getById);
 

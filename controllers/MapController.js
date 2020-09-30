@@ -4,7 +4,7 @@ const ObjectId = mongoose.Types.ObjectId;
 const { validationResult } = require("express-validator/check");
 
 class MapController {
-    
+
     //get all maps
     async getAll(req, res, next) {
         try {
@@ -32,7 +32,7 @@ class MapController {
         const pagesize = 5;
         const page = req.params.page;
         try {
-            let maps = await Map.find().sort({date : -1}).skip(pagesize * (page - 1)).limit(pagesize);
+            let maps = await Map.find().sort({ date: -1 }).skip(pagesize * (page - 1)).limit(pagesize);
             if (!maps.length) {
                 res.status(404).json({
                     message: "موردی یافت نشد"
@@ -96,6 +96,26 @@ class MapController {
                 message: "با موفقیت حذف شد!"
             });
 
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    //get maps by query
+    async getByQuery(req, res) {
+        let { minLat, maxLat, minLong, maxLong } = req.body;
+        try {
+            let maps = await Map.find({
+                $and:
+                    [
+                        { latitude: { $gte: minLat } },
+                        { latitude: { $lte: maxLat } },
+                        { longitude: { $gte: minLong } },
+                        { longitude: { $lte: maxLong } }
+                    ]
+            });
+
+            res.json(maps);
         } catch (error) {
             next(error);
         }

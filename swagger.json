@@ -109,6 +109,40 @@
                 }
             }
         },
+        "/map/query": {
+            "parameters": [
+                {
+                    "name": "Map",
+                    "in": "body",
+                    "description": "get maps by this parameters in body",
+                    "schema": {
+                        "$ref": "#/definitions/getByQuery"
+                    }
+                }
+            ],
+            "get": {
+                "tags": [
+                    "Maps"
+                ],
+                "summary": "Get maps by query",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "items": {
+                                "$ref": "#/definitions/GetMap"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server internal error",
+                        "schema": {
+                            "$ref": "#/definitions/RespnseMessage"
+                        }
+                    }
+                }
+            }
+        },
         "/map/page/{pagenumber}": {
             "parameters": [
                 {
@@ -568,6 +602,22 @@
                 },
                 "date": {
                     "type": "string"
+                }
+            }
+        },
+        "getByQuery": {
+            "properties": {
+                "minLat": {
+                    "type": "number"
+                },
+                "maxLat": {
+                    "type": "number"
+                },
+                "minLong": {
+                    "type": "number"
+                },
+                "maxLong": {
+                    "type": "number"
                 }
             }
         },
